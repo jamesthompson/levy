@@ -4,11 +4,12 @@
 -- >>> import System.Random (newStdGen)
 -- >>> import Control.Monad.Random
 --
--- >>> test :: IO ()
--- >>> test = do
--- >>>   gen <- newStdGen
--- >>>   let x = evalRandT (sampleLevy 0.0 0.5) gen :: Maybe Double
--- >>>   putStrLn $ show x
+-- An example random sampling:
+-- test :: IO ()
+-- test = do
+--   gen <- newStdGen
+--   let x = evalRandT (sampleLevy 0.0 0.5) gen :: Maybe Double
+--   putStrLn $ show x
 ---------------------------------------------------------------------------------
 
 module Statistics.Distribution.Levy (
@@ -18,15 +19,17 @@ module Statistics.Distribution.Levy (
   ) where
 
 import           Control.Monad              (MonadPlus, mzero)
-import           Control.Monad.Random       (RandT, RandomGen, evalRandT)
+import           Control.Monad.Random       (RandT, RandomGen)
 import           Control.Monad.Random.Class (getRandom)
 import           Data.Number.Erf            (Erf, InvErf, erfc, invnormcdf)
 import           System.Random              (Random)
 
 
 -- | Compute the probability density at x for the Lévy distribution
---   using the given location offset and scale params
---   n.b. x must be >= offset
+-- using the given location offset and scale params
+-- n.b. x must be >= offset
+-- >>> levyPdf 0.5 1.5 1.0 :: Maybe Double
+-- Just 0.3083606596075385
 levyPdf
   :: (MonadPlus m, Floating a, Ord a)
   => a
@@ -43,8 +46,10 @@ levyPdf offset scale x
   | otherwise   = mzero
 
 -- | Compute the cumulative probability at x for the Lévy distribution
---   using the given location offset and scale params
---   n.b. x must be >= offset
+-- using the given location offset and scale params
+-- n.b. x must be >= offset
+-- >>> levyCdf 0.5 1.5 7.0 :: Maybe Double
+-- Just 0.6309540411841708
 levyCdf
   :: (MonadPlus m, Erf a, Ord a)
   => a
