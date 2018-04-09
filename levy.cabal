@@ -1,0 +1,22 @@
+name:                  levy
+version:               0.1.0.0
+synopsis:              Lévy distribution functions
+description:           Assorted Lévy distribution functions for statistics and simulations
+homepage:              https://github.com/jamesthompson/levy.git
+license:               BSD3
+license-file:          LICENSE
+author:                James R. Thompson
+maintainer:            jamesthompsonoxford@gmail.com
+copyright:             James R. Thompson
+category:              Math
+build-type:            Simple
+cabal-version:         >= 1.10
+
+library
+  exposed-modules:     Statistics.Distribution.Levy
+  build-depends:       base        >=4.8      && <5,
+                       erf         >=2.0.0.0  && <2.1,
+                       MonadRandom >=0.5      && <0.6,
+                       random      >=1.1      && <1.2
+  hs-source-dirs:      src
+  default-language:    Haskell2010
